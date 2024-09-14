@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - development
+
 env:
   REGION: ${{ secrets.REGION }}
-  ROLE_ARN: ${{ secrets.ROLE_ARN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   build-organization:
@@ -23,10 +25,10 @@ jobs:
           cache: 'pip'
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ env.ROLE_ARN }}
-          aws-region: us-west-2
+        run: |
+          aws configure set aws_access_key_id ${{ env.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ${{ env.REGION }}
 
       - name: Run deploy code dev-create-personal-plan-fingo
         run: |
@@ -38,4 +40,3 @@ jobs:
           aws lambda update-function-code  \
             --function-name dev-create-personal-plan-fingo \
             --zip-file fileb://build.zip
-      
