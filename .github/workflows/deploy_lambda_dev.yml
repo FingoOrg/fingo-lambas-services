@@ -1,0 +1,41 @@
+name: Deploy organization lambda dev
+
+on:
+  push:
+    branches:
+      - development
+env:
+  REGION: ${{ secrets.REGION }}
+  ROLE_ARN: ${{ secrets.ROLE_ARN }}
+
+jobs:
+  build-organization:
+    name: Build code
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Run deploy code dev-chipotle-inference-service
+        run: |
+          cd src/chipotle-inference-service/src
+          pip install -r requirements.txt --target .
+          find . -name '*.pyc' -delete
+          zip -r build.zip .
+          ls
+          aws lambda update-function-code  \
+            --function-name dev-chipotle-inference-service \
+            --zip-file fileb://build.zip
+      
