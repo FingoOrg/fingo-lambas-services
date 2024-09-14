@@ -28,14 +28,14 @@ jobs:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: us-west-2
 
-      - name: Run deploy code dev-chipotle-inference-service
+      - name: Run deploy code dev-create-personal-plan-fingo
         run: |
-          cd src/chipotle-inference-service/src
+          cd src/fingo-create-personal-plan-service/src
           pip install -r requirements.txt --target .
           find . -name '*.pyc' -delete
           zip -r build.zip .
           ls
           aws lambda update-function-code  \
-            --function-name dev-chipotle-inference-service \
+            --function-name dev-create-personal-plan-fingo \
             --zip-file fileb://build.zip
       
