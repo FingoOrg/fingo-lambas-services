@@ -50,4 +50,4 @@ jobs:
           ls
           aws lambda update-function-code  \
             --function-name dev-handle-personal-plan-status-fingo \
-            --zip-file fileb://build.zipk     
+            --zip-file fileb://build.zip
