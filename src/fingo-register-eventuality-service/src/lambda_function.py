@@ -65,6 +65,15 @@ def lambda_handler(event, context):
         4. **Maintain a balance between savings and investments**: Ensure that the user still works toward both short-term and long-term goals despite the financial setback.
         5. **Actionable Steps**: Each adjusted step should remain actionable, with a clear amount to save or invest, an updated target date, and the type of financial action (savings or investment).
 
+        ### Important Instructions for JSON Structure:
+        It is **critical** that the output is a **fully valid JSON**. Please strictly follow these guidelines:
+        1. Ensure every opening has a matching closing and every `[` has a matching `]`.
+        2. Every field must be correctly formatted as `"key": value`.
+        3. Strings must be enclosed in double quotes `"`, and no extra commas should be present.
+        4. Ensure that numeric values are properly formatted as numbers without quotes.
+        5. Every JSON object must have the required fields: `id`, `title`, `description`, `type`, `amount`, `due_date`, and `status`.
+        6. **Do not add any extra text, explanations, or commentary**. Return only the **pure JSON structure**, nothing else.
+
         ### Expected Output:
         Please only return the **JSON structure** of the updated financial plan. Do not include any additional explanations or formatting other than the JSON structure. The JSON should follow this format:
 
@@ -81,8 +90,9 @@ def lambda_handler(event, context):
             ...
         ]
 
-        Make sure that only the updated JSON structure is returned as the output, without any additional text or explanation.
+        Make sure that **only** the updated JSON structure is returned as the output, without any additional text or explanation. Ensure that the structure is fully valid JSON with no missing brackets or commas.
     """
+
 
 
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
