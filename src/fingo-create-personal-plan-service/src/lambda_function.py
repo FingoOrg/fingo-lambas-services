@@ -59,12 +59,16 @@ def lambda_handler(event, context):
         ### Additional Requirements:
         - Include **at least five** steps in the plan.
         - Ensure that the steps are based on the user's **income, expenses, debts, financial goals**, and the timeframe they have for these goals.
-        - The plan must be divided into both **short-term** (e.g., building an emergency fund, paying off credit card debt) and **long-term** strategies (e.g., saving for retirement, investing in a diversified portfolio).
+        - The plan needs to adequate itself to achive the goals given by the user
+        - The steps need to be progessive, meaning that a step can't be completed if the last step hasn't been completed
         - Consider the user’s **risk tolerance** when providing investment options (e.g., stocks, bonds, real estate).
         - Provide clear target dates to help the user track progress.
 
         Please **only return the JSON structure** without formatting it as a code block or using triple backticks.
     """
+
+    # - The plan must be divided into both **short-term** (e.g., building an emergency fund, paying off credit card debt) and **long-term** strategies (e.g., saving for retirement, investing in a diversified portfolio).
+
 
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
     dynamodb_response = dynamodb_client.insert_item(
