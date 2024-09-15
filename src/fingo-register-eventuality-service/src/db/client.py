@@ -18,7 +18,7 @@ class DynamoDBClient:
 
             return {
                 'status': 'success',
-                'response': str(response["item"])
+                'response': response
             }
         
         except ClientError as e:

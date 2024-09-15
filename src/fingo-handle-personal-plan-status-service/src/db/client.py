@@ -23,7 +23,7 @@ class DynamoDBClient:
 
             return {
                 'status': 'success',
-                'response': response
+                "response": response
             }
         except ClientError as e:
             return {
