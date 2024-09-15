@@ -10,7 +10,9 @@ class DynamoDBClient:
     def complete_node(self, item):
         try:
 
-            br_str = str(item['bedrock_response']).replace("'", '"')
+            br_quotes = str(item['bedrock_response']).replace("'", '"')
+            br_bool = br_quotes.replace("True", "true")
+            br_str = br_quotes.replace("False", "false")
 
             response = self.table.update_item(
                 Key={"path_id": item['path_id'], "user_id": item['user_id']},
