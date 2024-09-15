@@ -51,7 +51,7 @@ def lambda_handler(event, context):
         - **Description**: {eventuality_description}
         - **Amount spent**: {amount}
 
-        This event requires changes to the financial plan. Specifically, you need to adjust the steps that have not yet been completed. Do not modify the steps that have already been marked as completed (those with `status: true`). Adjust the rest of the steps to reflect the financial impact of the unexpected event, redistributing the remaining savings or investment amounts, updating deadlines, or re-prioritizing actions as necessary.
+        This event requires changes to the financial plan. Specifically, you need to adjust the steps that have not yet been completed. **Do not modify or remove** the steps that have already been marked as completed (those with `status: true`). These steps must remain in the same position within the plan. Adjust the rest of the steps to reflect the financial impact of the unexpected event, redistributing the remaining savings or investment amounts, updating deadlines, or re-prioritizing actions as necessary.
 
         ### User's Financial Profile:
         The user provided the following information regarding their financial situation, which should also inform your adjustments:
@@ -59,7 +59,7 @@ def lambda_handler(event, context):
         {json.dumps(dynamodb_response, indent=2, default=decimal_default)}
 
         ### Criteria for Adjustments:
-        1. **Modify only incomplete steps**: Ensure that steps marked as `status: true` remain unchanged. Focus on adjusting the remaining steps.
+        1. **Modify only incomplete steps**: Ensure that steps marked as `status: true` remain unchanged and stay in the same position. Focus on adjusting the remaining steps.
         2. **Rebalance savings and investments**: Adjust the remaining financial steps, considering the amount spent on the unexpected event, and suggest how the user can stay on track with their financial goals.
         3. **Adjust amounts and deadlines**: Propose new amounts to save or invest, and update due dates if necessary to account for the financial setback.
         4. **Maintain a balance between savings and investments**: Ensure that the user still works toward both short-term and long-term goals despite the financial setback.
@@ -73,6 +73,7 @@ def lambda_handler(event, context):
         4. Ensure that numeric values are properly formatted as numbers without quotes.
         5. Every JSON object must have the required fields: `id`, `title`, `description`, `type`, `amount`, `due_date`, and `status`.
         6. **Do not add any extra text, explanations, or commentary**. Return only the **pure JSON structure**, nothing else.
+        7. **Steps that are marked as completed (with `status: true`) must remain in their original position and should not be modified or removed.**
 
         ### Expected Output:
         Please only return the **JSON structure** of the updated financial plan. Do not include any additional explanations or formatting other than the JSON structure. The JSON should follow this format:
@@ -90,8 +91,9 @@ def lambda_handler(event, context):
             ...
         ]
 
-        Make sure that **only** the updated JSON structure is returned as the output, without any additional text or explanation. Ensure that the structure is fully valid JSON with no missing brackets or commas.
+        Make sure that **only** the updated JSON structure is returned as the output, without any additional text or explanation. Ensure that the structure is fully valid JSON with no missing brackets or commas, and that completed steps remain unchanged and in their original positions.
     """
+
 
 
 
