@@ -93,7 +93,8 @@ def lambda_handler(event, context):
         'user_id': path_info['user_id'],
         'path_id': path_info['path_id'],
         'badge': badges,
-        'bedrock_response': nodes
+        'bedrock_response': nodes,
+        'percentage_completed': int(path_per)
     })
 
     return {
