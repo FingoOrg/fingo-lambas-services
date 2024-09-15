@@ -61,9 +61,7 @@ def lambda_handler(event, context):
 
         Please structure your response clearly and in a way that the steps can be easily parsed and followed by the user. Ensure each step has all the required fields (id, title, description, type, amount, due_date, status).
     """
-
-    print(f"LLM Query: {format_form_data(form_data)}")
-
+    
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
     dynamo_response = dynamodb_client.insert_item(
         form_data=form_data,
