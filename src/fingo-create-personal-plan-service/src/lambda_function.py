@@ -65,7 +65,8 @@ def lambda_handler(event, context):
         - Provide clear target dates to help the user track progress.
         - The steps need to be achievable goal in a short term, but still aligned to the goal.
         - The amount atributte need to be coherent with the step. E.g if the step says to pay a 1000 debt the amount has to be -1000. If the step says to save 1000 the amount has to be 1000.
-
+        - All status have to be false by default
+        - If the ammount to save or invest is higher than 7000, split it into multiple steps. E.g. Step 1 has an amount of 10000 it will be split it into 3 steps of 3300
         Please **only return the JSON structure** without formatting it as a code block or using triple backticks.
     """
 
