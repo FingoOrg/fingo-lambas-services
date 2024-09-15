@@ -12,7 +12,14 @@ def lambda_handler(event, context):
         'path_id': path_info['path_id']
     })
 
+    if response['status'] == 'success':
+        dynamodb_response = response.get('data', 'No data found')
+    else:
+        dynamodb_response = response.get('message', 'Unknown error occurred')
+
     return {
         'statusCode': 200 if response['status'] == 'success' else 500,
-        'body': json.dumps(response)
+        'body': json.dumps({
+            'dynamodb_response': str(dynamodb_response)
+        })
     }
