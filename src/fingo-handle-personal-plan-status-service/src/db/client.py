@@ -12,7 +12,7 @@ class DynamoDBClient:
 
             br_quotes = str(item['bedrock_response']).replace("'", '"')
             br_bool = br_quotes.replace("True", "true")
-            br_str = br_quotes.replace("False", "false")
+            br_str = br_bool.replace("False", "false")
 
             response = self.table.update_item(
                 Key={"path_id": item['path_id'], "user_id": item['user_id']},
