@@ -9,14 +9,84 @@ def lambda_handler(event, context):
     completed_id = event["completed_id"]
     path_info = event["path_info"]
     nodes = path_info["bedrock_response"]
-
+    
     # Marcamos el path como completado
+    completed_counter = 0
+
     for node in nodes:
         if node["id"] == completed_id:
             node["status"] = True
+        
+        if node["status"]:
+            completed_counter += 1
 
-    # Establecemos las nuevas badges
-    badges = path_info["badge"]
+    path_per = (completed_counter*100)/len(nodes)
+
+    if path_per < 25:
+        badges = []
+    elif path_per >= 25 and path_per < 50:
+        badges = [
+            {
+                "title": "Medalla de Bronce",
+                "description": f"Completaste 25% de un path",
+                "type": "bronce-medal"
+            }
+        ]
+    elif path_per >= 50 and path_per < 75:
+        badges = [
+            {
+                "title": "Medalla de Bronce",
+                "description": f"Completaste 25% de un path",
+                "type": "bronce-medal"
+            },
+            {
+                "title": "Medalla de Plata",
+                "description": f"Completaste 50% de un path",
+                "type": "bronce-medal"
+            }
+        ]
+    elif path_per >= 75 and path_per < 100:
+        badges = [
+            {
+                "title": "Medalla de Bronce",
+                "description": f"Completaste 25% de un path",
+                "type": "bronce-medal"
+            },
+            {
+                "title": "Medalla de Plata",
+                "description": f"Completaste 50% de un path",
+                "type": "silver-medal"
+            },
+            {
+                "title": "Medalla de Oro",
+                "description": f"Completaste 75% de un path",
+                "type": "gold-medal"
+            }
+        ]
+    elif path_per == 100:
+        badges = [
+            {
+                "title": "Medalla de Bronce",
+                "description": f"Completaste 25% de un path",
+                "type": "bronce-medal"
+            },
+            {
+                "title": "Medalla de Plata",
+                "description": f"Completaste 50% de un path",
+                "type": "silver-medal"
+            },
+            {
+                "title": "Medalla de Oro",
+                "description": f"Completaste 75% de un path",
+                "type": "gold-medal"
+            },
+            {
+                "title": "Trofeo Platino",
+                "description": f"Completaste 100% de un path",
+                "type": "platinum-trophy"
+            }
+        ]
+
 
     # Actualizamos la información del path
     response = db_client.complete_node({
