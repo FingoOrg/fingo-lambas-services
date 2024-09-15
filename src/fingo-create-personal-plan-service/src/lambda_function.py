@@ -49,7 +49,7 @@ def lambda_handler(event, context):
                 "title": "string",         // A concise title for the step (e.g., "Build Emergency Fund")
                 "description": "string",   // Detailed explanation of the step and why it’s important
                 "type": "investment" or "savings",  // Type of step: either investment or savings
-                "amount": float,           // Amount of money to set aside or invest (e.g., 500.00)
+                "amount": float,           // Amount of money destinated to be saved or invested
                 "due_date": "YYYY-MM-DD",  // Target date for completing the step (e.g., "2024-12-31")
                 "status": bool             // Status: true if completed, false if not
             }},
@@ -63,7 +63,8 @@ def lambda_handler(event, context):
         - The steps need to be progessive, meaning that a step can't be completed if the last step hasn't been completed
         - Consider the user’s **risk tolerance** when providing investment options (e.g., stocks, bonds, real estate).
         - Provide clear target dates to help the user track progress.
-        - The steps need to be achievable goal in a short term, but still aligned to the goal
+        - The steps need to be achievable goal in a short term, but still aligned to the goal.
+        - The amount atributte need to be coherent with the step. E.g if the step says to pay a 1000 debt the amount has to be -1000. If the step says to save 1000 the amount has to be 1000.
 
         Please **only return the JSON structure** without formatting it as a code block or using triple backticks.
     """
