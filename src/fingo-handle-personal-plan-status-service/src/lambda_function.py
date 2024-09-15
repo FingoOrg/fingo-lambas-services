@@ -29,6 +29,6 @@ def lambda_handler(event, context):
     return {
         'statusCode': 200 if response['status'] == 'success' else 500,
         'body': json.dumps({
-            'dynamodb_response': response['response']
+            'dynamodb_response': str(response['response'])
         })
     }
