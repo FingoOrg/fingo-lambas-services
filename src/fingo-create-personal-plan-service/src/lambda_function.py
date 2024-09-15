@@ -63,6 +63,7 @@ def lambda_handler(event, context):
         - The steps need to be progessive, meaning that a step can't be completed if the last step hasn't been completed
         - Consider the user’s **risk tolerance** when providing investment options (e.g., stocks, bonds, real estate).
         - Provide clear target dates to help the user track progress.
+        - The steps need to be achievable goal in a short term, but still aligned to the goal
 
         Please **only return the JSON structure** without formatting it as a code block or using triple backticks.
     """
