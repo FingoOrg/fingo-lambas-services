@@ -9,14 +9,22 @@ def decimal_default(obj):
     raise TypeError
 
 def sum_completed_amounts(response):
-    total = 0
+    savings_total = 0
+    investment_total = 0
+    
     bedrock_response = json.loads(response['data'][0]['bedrock_response'])
     
     for plan in bedrock_response:
         if plan['status'] == True:
-            total += plan['amount']
+            if plan['type'] == 'savings':
+                savings_total += plan['amount']
+            elif plan['type'] == 'investment':
+                investment_total += plan['amount']
     
-    return total
+    return {
+        'savings_total': savings_total,
+        'investment_total': investment_total
+    }
 
 dynamodb_client = DynamoDBClient(os.environ['DYNAMODB_TABLE_NAME'])
 
@@ -28,5 +36,5 @@ def lambda_handler(event, context):
     return {
         'statusCode': 200,
         'body': json.dumps(response, default=decimal_default),
-        'completed_amount': completed_amount
+        'amounts': completed_amount
     }
