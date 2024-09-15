@@ -12,8 +12,8 @@ class DynamoDBClient:
 
             response = self.table.update_item(
                 Key={"path_id": item['path_id'], "user_id": item['user_id']},
-                UpdateExpression="set bedrock_response=:br, badge=:bg",
-                ExpressionAttributeValues={":br": item['bedrock_response'], ":bg": item['badge']},
+                UpdateExpression="set bedrock_response=:br, badges=:bg",
+                ExpressionAttributeValues={":br": str(item['bedrock_response']), ":bg": item['badge']},
                 ReturnValues="UPDATED_NEW",
             )
             return {
