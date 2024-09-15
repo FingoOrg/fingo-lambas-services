@@ -67,7 +67,7 @@ def lambda_handler(event, context):
     """
 
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
-    dynamo_response = dynamodb_client.insert_item(
+    dynamodb_response = dynamodb_client.insert_item(
         form_data=form_data,
         model_response=bedrock_response,
     )
@@ -76,6 +76,6 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps({
             'bedrock_response': bedrock_response,
-            'dynamo_response': dynamo_response,
+            'dynamodb_response': dynamodb_response,
         }),
     }
