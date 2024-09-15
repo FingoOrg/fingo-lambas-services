@@ -10,12 +10,15 @@ class DynamoDBClient:
     def complete_node(self, item):
         try:
 
+            br_str = str(item['bedrock_response']).replace("'", '"')
+
             response = self.table.update_item(
                 Key={"path_id": item['path_id'], "user_id": item['user_id']},
                 UpdateExpression="set bedrock_response=:br, badges=:bg",
-                ExpressionAttributeValues={":br": str(item['bedrock_response']), ":bg": item['badge']},
+                ExpressionAttributeValues={":br": br_str, ":bg": item['badge']},
                 ReturnValues="UPDATED_NEW",
             )
+
             return {
                 'status': 'success',
                 'response': response
