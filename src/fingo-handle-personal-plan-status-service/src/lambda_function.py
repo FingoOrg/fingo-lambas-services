@@ -17,7 +17,7 @@ def lambda_handler(event, context):
         if node["id"] == completed_id:
             node["status"] = True
         
-        if node["status"]:
+        if node["status"] == True:
             completed_counter += 1
 
     path_per = (completed_counter*100)/len(nodes)
