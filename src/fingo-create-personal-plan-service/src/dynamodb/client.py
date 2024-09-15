@@ -1,5 +1,6 @@
 import boto3
 import os
+import uuid
 from botocore.exceptions import ClientError
 
 class DynamoDBClient:
@@ -10,9 +11,11 @@ class DynamoDBClient:
     def insert_item(self, form_data, model_response):
         try:
             response = self.table.put_item(Item={
+                'path_id': uuid.uuid4().hex,
                 'user_id': os.environ['USER_ID'],
                 'form_data': form_data,
-                'bedrock_response': model_response
+                'bedrock_response': model_response,
+                'badges': []
             })
             return {
                 'status': 'success',
