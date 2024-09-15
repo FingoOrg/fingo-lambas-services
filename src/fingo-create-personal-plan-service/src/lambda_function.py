@@ -20,7 +20,6 @@ def lambda_handler(event, context):
         temperature=0.7,  
         top_p=0.9,  
         top_k=50,
-        stop_sequences=["\n"]
     )
 
     response = bedrock_client.invoke_anthropic_claude(

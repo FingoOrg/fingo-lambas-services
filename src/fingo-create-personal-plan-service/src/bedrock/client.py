@@ -4,13 +4,12 @@ import os
 from botocore.exceptions import ClientError
 
 class BedrockClient:
-    def __init__(self, region_name, max_tokens=512, temperature=0.5, top_p=None, top_k=None, stop_sequences=None):
+    def __init__(self, region_name, max_tokens=512, temperature=0.5, top_p=None, top_k=None):
         self.client = boto3.client("bedrock-runtime", region_name=region_name)
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.top_p = top_p
         self.top_k = top_k
-        self.stop_sequences = stop_sequences
 
     def invoke_anthropic_claude(self, model_id, prompt):
         native_request = {
@@ -30,9 +29,6 @@ class BedrockClient:
         
         if self.top_k is not None:
             native_request["top_k"] = self.top_k
-        
-        if self.stop_sequences is not None:
-            native_request["stop_sequences"] = self.stop_sequences
 
         request_payload = json.dumps(native_request)
 
