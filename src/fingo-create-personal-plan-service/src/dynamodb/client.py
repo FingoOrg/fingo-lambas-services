@@ -11,7 +11,6 @@ class DynamoDBClient:
         try:
             response = self.table.put_item(Item={
                 'user_id': uuid.uuid4().hex,
-                'llm_query': llm_query,
                 'form_data': form_data,
                 'bedrock_response': model_response
             })
