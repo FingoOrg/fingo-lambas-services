@@ -6,10 +6,9 @@ import uuid
 dynamodb_client = DynamoDBClient(DYNAMODB_TABLE_NAME)
 
 def lambda_handler(event, context):
-    response = dynamodb_client.insert_item({
-        'user_id': uuid.uuid4().hex,
-        'event': event
-    })
+    """AWS Lambda handler."""
+    form = event['form']
+    response = dynamodb_client.insert_item(form)
 
     return {
         'statusCode': 200 if response['status'] == 'success' else 500,

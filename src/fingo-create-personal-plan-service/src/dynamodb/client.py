@@ -1,4 +1,5 @@
 import boto3
+import uuid
 from botocore.exceptions import ClientError
 
 class DynamoDBClient:
@@ -8,7 +9,10 @@ class DynamoDBClient:
 
     def insert_item(self, item):
         try:
-            response = self.table.put_item(Item=item)
+            response = self.table.put_item(Item={
+                'user_id': uuid.uuid4().hex,
+                **item
+            })
             return {
                 'status': 'success',
                 'response': response
