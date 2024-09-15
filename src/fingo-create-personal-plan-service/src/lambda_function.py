@@ -9,7 +9,7 @@ from config.env import (
 dynamodb_client = DynamoDBClient(DYNAMODB_TABLE_NAME)
 bedrock_client = BedrockClient(
     region_name='us-west-2', 
-    max_tokens=1000, 
+    max_tokens=4000, 
     temperature=0.7, 
     top_p=0.9, 
     top_k=50,
