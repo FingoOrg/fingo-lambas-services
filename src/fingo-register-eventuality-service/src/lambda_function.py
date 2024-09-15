@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal
 from db.client import DynamoDBClient
 from bedrock.client import BedrockClient
 from config.env import DYNAMODB_TABLE_NAME
@@ -13,6 +14,11 @@ bedrock_client = BedrockClient(
     top_p=0.9, 
     top_k=50,
 )
+
+def decimal_default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
 
 def lambda_handler(event, context):
     path_info = event["path_info"]
@@ -31,14 +37,13 @@ def lambda_handler(event, context):
     else:
         dynamodb_response = response.get('message', 'Unknown error occurred')
 
-
     llm_query = f"""
         You are a financial expert tasked with **adjusting a personalized financial plan** for a user who has encountered an unexpected financial event. The current plan includes savings and investment strategies, but certain steps need to be modified based on this new event.
 
         ### Current Financial Plan:
         Here is the current financial plan for the user:
 
-        {json.dumps(bedrock_response, indent=2)}
+        {json.dumps(bedrock_response, indent=2, default=decimal_default)}
 
         ### Eventuality:
         The user has experienced the following financial event:
@@ -51,7 +56,7 @@ def lambda_handler(event, context):
         ### User's Financial Profile:
         The user provided the following information regarding their financial situation, which should also inform your adjustments:
 
-        {json.dumps(dynamodb_response, indent=2)}
+        {json.dumps(dynamodb_response, indent=2, default=decimal_default)}
 
         ### Criteria for Adjustments:
         1. **Modify only incomplete steps**: Ensure that steps marked as `status: true` remain unchanged. Focus on adjusting the remaining steps.
@@ -79,13 +84,12 @@ def lambda_handler(event, context):
         Make sure to propose a plan that helps the user overcome the financial event while still working toward their long-term goals.
     """
 
-
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
 
     return {
         'statusCode': 200 if response['status'] == 'success' else 500,
         'body': json.dumps({
-            'dynamodb_response': str(dynamodb_response),
+            'dynamodb_response': dynamodb_response,
             'bedrock_response': bedrock_response,
-        })
+        }, default=decimal_default)
     }
