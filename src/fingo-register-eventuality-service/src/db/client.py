@@ -8,9 +8,8 @@ class DynamoDBClient:
 
     def get_form_data(self, item):
         try:
-
             response = self.table.get_item(
-                Key = {
+                Key={
                     "path_id": item['path_id'], 
                     "user_id": item['user_id']
                 }
@@ -19,12 +18,12 @@ class DynamoDBClient:
             if 'Item' in response:
                 return {
                     'status': 'success',
-                    'data': response['Items']
+                    'data': response['Item']  # Fixed to return 'Item' (singular)
                 }
             else:
                 return {
                     'status': 'success',
-                    'data': []
+                    'data': []  # Empty list if no item is found
                 }
         
         except ClientError as e:
