@@ -16,10 +16,16 @@ class DynamoDBClient:
                 }
             )
 
-            return {
-                'status': 'success',
-                'response': response
-            }
+            if 'Item' in response:
+                return {
+                    'status': 'success',
+                    'data': response['Items']
+                }
+            else:
+                return {
+                    'status': 'success',
+                    'data': []
+                }
         
         except ClientError as e:
             return {
