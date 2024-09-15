@@ -51,3 +51,15 @@ jobs:
           aws lambda update-function-code  \
             --function-name dev-handle-personal-plan-status-fingo \
             --zip-file fileb://build.zip
+
+
+      - name: Run deploy code dev-consult-personal-plans-fingo
+        run: |
+          cd src/fingo-consult-personal-plans-service/src
+          pip install -r requirements.txt --target .
+          find . -name '*.pyc' -delete
+          zip -r build.zip .
+          ls
+          aws lambda update-function-code  \
+            --function-name dev-consult-personal-plans-fingo \
+            --zip-file fileb://build.zip
