@@ -42,7 +42,7 @@ def lambda_handler(event, context):
             {
                 "title": "Medalla de Plata",
                 "description": f"Completaste 50% de un path",
-                "type": "bronce-medal"
+                "type": "silver-medal"
             }
         ]
     elif path_per >= 75 and path_per < 100:
