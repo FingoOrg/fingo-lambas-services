@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     nodes = path_info["bedrock_response"]
     
     # Actualizamos la información del path
-    response = db_client.complete_node({
+    response = db_client.get_form_data({
         'user_id': path_info['user_id'],
         'path_id': path_info['path_id']
     })
