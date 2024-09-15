@@ -8,7 +8,7 @@ db_client = DynamoDBClient(DYNAMODB_TABLE_NAME)
 def lambda_handler(event, context):
     response = db_client.complete_node({
         'user_id': event["user_id"],
-        'path_node': event["node_id"]
+        'node_id': event["node_id"]
     })
 
     return {

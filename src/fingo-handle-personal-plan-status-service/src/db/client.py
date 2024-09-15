@@ -9,21 +9,11 @@ class DynamoDBClient:
 
     def complete_node(self, item):
         try:
-            response = self.table.update_item(
-                    Key={
-                        'user_id': item['user_id']
-                    },
-                    UpdateExpression="SET nodes.#n.completed = :val",
-                    ConditionExpression="nodes.#n.node_id = :node_id",
-                    ExpressionAttributeNames={
-                        '#n': 'node_id'
-                    },
-                    ExpressionAttributeValues={
-                        ':val': True,
-                        ':node_id': item['user_id']
-                    },
-                    ReturnValues="UPDATED_NEW"
-                )
+            response = self.table.get_item(
+                Key={
+                    'user_id': item["user_id"]
+                }
+            )
 
             return {
                 'status': 'success',
