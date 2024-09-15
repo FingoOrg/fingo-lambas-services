@@ -7,11 +7,10 @@ class DynamoDBClient:
         self.dynamodb = boto3.resource('dynamodb')
         self.table = self.dynamodb.Table(table_name)
 
-    def insert_item(self, llm_query, form_data, model_response):
+    def insert_item(self, form_data, model_response):
         try:
             response = self.table.put_item(Item={
                 'user_id': uuid.uuid4().hex,
-                'llm_query': llm_query,
                 'form_data': form_data,
                 'bedrock_response': model_response
             })
