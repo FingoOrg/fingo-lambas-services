@@ -10,9 +10,12 @@ def decimal_default(obj):
 
 def sum_completed_amounts(response):
     total = 0
-    for plan in response['data'][0]['bedrock_response']:
+    bedrock_response = json.loads(response['data'][0]['bedrock_response'])
+    
+    for plan in bedrock_response:
         if plan['status'] == True:
             total += plan['amount']
+    
     return total
 
 dynamodb_client = DynamoDBClient(os.environ['DYNAMODB_TABLE_NAME'])
