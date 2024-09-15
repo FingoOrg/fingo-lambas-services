@@ -3,7 +3,6 @@ from dynamodb.client import DynamoDBClient
 from bedrock.client import BedrockClient
 from config.env import (
     DYNAMODB_TABLE_NAME,
-    AWS_REGION,
     BEDROCK_MODEL_ID,
 )
 import uuid
@@ -16,7 +15,7 @@ def lambda_handler(event, context):
 
     llm_query = event['llm_query']
     bedrock_client = BedrockClient(
-        region_name=AWS_REGION,
+        region_name='us-west-2',
         max_tokens=300,  
         temperature=0.7,  
         top_p=0.9,  
