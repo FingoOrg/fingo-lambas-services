@@ -66,7 +66,7 @@ def lambda_handler(event, context):
         5. **Actionable Steps**: Each adjusted step should remain actionable, with a clear amount to save or invest, an updated target date, and the type of financial action (savings or investment).
 
         ### Expected Output:
-        Provide the updated financial plan in the following JSON structure:
+        Please only return the **JSON structure** of the updated financial plan. Do not include any additional explanations or formatting other than the JSON structure. The JSON should follow this format:
 
         [
             {{
@@ -81,8 +81,9 @@ def lambda_handler(event, context):
             ...
         ]
 
-        Make sure to propose a plan that helps the user overcome the financial event while still working toward their long-term goals.
+        Make sure that only the updated JSON structure is returned as the output, without any additional text or explanation.
     """
+
 
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
 
