@@ -9,15 +9,11 @@ class DynamoDBClient:
 
     def complete_node(self, item):
         try:
-            # response = self.table.get_item(
-            #     Key={
-            #         'user_id': item["user_id"]
-            #     }
-            # )
-
-            response = {
-                "data": item["path_info"]
-            }
+            response = self.table.get_item(
+                Key={
+                    'user_id': item["user_id"]
+                }
+            )
 
             return {
                 'status': 'success',
