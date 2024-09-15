@@ -6,12 +6,18 @@ import uuid
 db_client = DynamoDBClient(DYNAMODB_TABLE_NAME)
 
 def lambda_handler(event, context):
-    response = db_client.complete_node({
-        'user_id': event["user_id"],
-        'node_id': event["node_id"]
-    })
+    # response = db_client.complete_node({
+    #     'user_id': event["user_id"],
+    #     'node_id': event["node_id"]
+    # })
+    response = {
+        "data": event["path_info"]
+    }
+
 
     return {
         'statusCode': 200 if response['status'] == 'success' else 500,
-        'body': json.dumps(response)
+        'body': json.dumps({
+            "res": response
+            })
     }
