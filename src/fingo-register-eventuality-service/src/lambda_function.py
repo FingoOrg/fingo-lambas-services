@@ -94,15 +94,20 @@ def lambda_handler(event, context):
         Make sure that **only** the updated JSON structure is returned as the output, without any additional text or explanation. Ensure that the structure is fully valid JSON with no missing brackets or commas, and that completed steps remain unchanged and in their original positions.
     """
 
-
-
-
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
+
+    # Actualizamos la información del path
+    response = db_client.rewrite_node({
+        'user_id': path_info['user_id'],
+        'path_id': path_info['path_id'],
+        'bedrock_response': bedrock_response
+    })
 
     return {
         'statusCode': 200 if response['status'] == 'success' else 500,
         'body': json.dumps({
             'dynamodb_response': dynamodb_response,
             'bedrock_response': bedrock_response,
+            'update_response': response
         }, default=decimal_default)
     }

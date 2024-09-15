@@ -31,3 +31,27 @@ class DynamoDBClient:
                 'status': 'error',
                 'message': e.response['Error']['Message']
             }
+
+    def rewrite_node(self, item):
+        try:
+
+            br_quotes = str(item['bedrock_response']).replace("'", '"')
+            br_bool = br_quotes.replace("True", "true")
+            br_str = br_bool.replace("False", "false")
+
+            response = self.table.update_item(
+                Key={"path_id": item['path_id'], "user_id": item['user_id']},
+                UpdateExpression="set bedrock_response=:br, badges=:bg",
+                ExpressionAttributeValues={":br": br_str, ":bg": item['badge']},
+                ReturnValues="UPDATED_NEW",
+            )
+
+            return {
+                'status': 'success',
+                'response': response
+            }
+        except ClientError as e:
+            return {
+                'status': 'error',
+                'message': e.response['Error']['Message']
+            }
