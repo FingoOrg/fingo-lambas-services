@@ -10,7 +10,7 @@ class DynamoDBClient:
     def insert_item(self, form_data, model_response):
         try:
             response = self.table.put_item(Item={
-                'user_id': uuid.uuid4().hex,
+                'user_id': "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 'form_data': form_data,
                 'bedrock_response': model_response
             })
