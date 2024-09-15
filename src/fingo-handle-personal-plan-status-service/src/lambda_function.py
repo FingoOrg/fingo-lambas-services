@@ -16,7 +16,7 @@ def lambda_handler(event, context):
             node["status"] = True
 
     # Establecemos las nuevas badges
-    badges = event["badge"]
+    badges = path_info["badge"]
 
     # Actualizamos la información del path
     response = db_client.complete_node({
