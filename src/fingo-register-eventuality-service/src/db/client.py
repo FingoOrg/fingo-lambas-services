@@ -18,7 +18,7 @@ class DynamoDBClient:
             if 'Item' in response:
                 return {
                     'status': 'success',
-                    'data': response['Item']  # Fixed to return 'Item' (singular)
+                    'data': response  # Fixed to return 'Item' (singular)
                 }
             else:
                 return {
