@@ -42,8 +42,7 @@ def lambda_handler(event, context):
         4. **Actionable Steps:** Each step should include an amount of money to save or invest, a specific deadline, and a status (whether the step is completed or not).
         5. **Diversity in Steps:** The plan must include a mix of both savings and investment strategies, considering the user's financial goals and personal profile.
         
-        ### Step Structure (JSON format):
-        ```json
+        ### Step Structure (in JSON format):
         [
             {{
                 "id": int,                 // Unique identifier for the step (e.g., 1, 2, 3...)
@@ -56,7 +55,6 @@ def lambda_handler(event, context):
             }},
             ...
         ]
-        ```
 
         ### Additional Requirements:
         - Include **at least five** steps in the plan.
@@ -65,7 +63,7 @@ def lambda_handler(event, context):
         - Consider the user’s **risk tolerance** when providing investment options (e.g., stocks, bonds, real estate).
         - Provide clear target dates to help the user track progress.
 
-        Your response should be structured **only in JSON format**.
+        Please **only return the JSON structure** without formatting it as a code block or using triple backticks.
     """
 
     bedrock_response = bedrock_client.invoke_anthropic_claude(BEDROCK_MODEL_ID, llm_query,)
