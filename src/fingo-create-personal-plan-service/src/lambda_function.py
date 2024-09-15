@@ -6,15 +6,6 @@ from config.env import (
     BEDROCK_MODEL_ID,
 )
 
-def format_form_data(form_data):
-    """Format form data for display."""
-    formatted_data = []
-    for item in form_data:
-        question = item['M']['question']['S']
-        answer = item['M']['answer']['S']
-        formatted_data.append(f"{question}\nAnswer: {answer}")
-    return "\n\n".join(formatted_data)
-
 dynamodb_client = DynamoDBClient(DYNAMODB_TABLE_NAME)
 bedrock_client = BedrockClient(
     region_name='us-west-2', 
@@ -32,7 +23,7 @@ def lambda_handler(event, context):
 
         Below is a summary of the user's financial profile based on their responses:
 
-        {format_form_data(form_data)}
+        {form_data}
 
         Your task is to generate a **step-by-step personal financial and investment plan** for the user, focusing on both savings and investment strategies. Each step should be clear and actionable, with the following structure:
 
