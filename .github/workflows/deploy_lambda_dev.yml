@@ -63,3 +63,14 @@ jobs:
           aws lambda update-function-code  \
             --function-name dev-consult-personal-plans-fingo \
             --zip-file fileb://build.zip
+
+      - name: Run deploy code dev-create-eventuality-fingo
+        run: |
+          cd src/fingo-register-eventuality-service/src
+          pip install -r requirements.txt --target .
+          find . -name '*.pyc' -delete
+          zip -r build.zip .
+          ls
+          aws lambda update-function-code  \
+            --function-name dev-create-eventuality-fingo \
+            --zip-file fileb://build.zip
