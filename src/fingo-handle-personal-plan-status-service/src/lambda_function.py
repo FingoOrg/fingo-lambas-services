@@ -16,7 +16,8 @@ def lambda_handler(event, context):
 
 
     return {
-        'statusCode': 200 if response['status'] == 'success' else 500,
+        'statusCode': 200 ,
+        # if response['status'] == 'success' else 500,
         'body': json.dumps({
             "res": response
             })
