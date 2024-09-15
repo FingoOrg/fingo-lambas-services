@@ -12,7 +12,7 @@ dynamodb_client = DynamoDBClient(os.environ['DYNAMODB_TABLE_NAME'])
 
 def lambda_handler(event, context):
     """AWS Lambda Function to handle requests to the Personal Plans Service"""
-    response = dynamodb_client.query_item(os.environ['USER_ID'])
+    response = dynamodb_client.scan_item_by_user_id(os.environ['USER_ID'])
 
     return {
         'statusCode': 200,
