@@ -9,13 +9,12 @@ class DynamoDBClient:
 
     def complete_node(self, item):
         try:
-            response = self.dynamodb.get_item(
-                TableName=self.table,  # Replace with your actual table name
+            response = self.table.get_item(
                 Key={
                     'user_id': item["user_id"]
                 }
             )
-            
+
             return {
                 'status': 'success',
                 'response': response
